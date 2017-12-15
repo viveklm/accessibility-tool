@@ -32,9 +32,9 @@ app.set('view engine', 'html');
 app.use(bodyParser.json({limit: '100mb'}));
 app.use(bodyParser.urlencoded({limit: '100mb', extended: true}));
 
-app.use(session({ resave: true,
+/*app.use(session({ resave: true,
 	      saveUninitialized: true,
-	      secret: 'uwotm8' }));
+	      secret: 'uwotm8' }));*/
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'src')));
@@ -62,7 +62,6 @@ if (fs.existsSync(ssl_path)) {
 }
 
 	app.get('/', function(req, res) {
-		req.session = null;
 		res.render('index.html',{data:''});
 	});
 
@@ -93,10 +92,10 @@ if (fs.existsSync(ssl_path)) {
 
     	log('E N G I N E ', engine);
 
-		/*if (typeof req.session.userName !== 'undefined') {
+		if (typeof req.session.userName !== 'undefined') {
 			userName = req.session.userName;
 			log('Testing logged in session: -> ', userName)
-		}*/
+		}
     	if(engine === 'htmlcs'){
 	    	if(typeof msgErr !== 'undefined' && msgErr=='true') eLevel.push(1);
 	    	if(typeof msgWarn !== 'undefined' && msgWarn=='true') eLevel.push(2);
@@ -181,7 +180,7 @@ if (fs.existsSync(ssl_path)) {
 			server = req.body.server
 
 			log(userName, password, stageName, server);
-			//req.session.userName = userName;
+			req.session.userName = userName;
 
 		var childArgs1 = ['--config=config/config.json', path.join(__dirname, 'src/login.js'), userName, password, stageName, server]
 			childProcess.execFile(binPath, childArgs1, function(err, stdout, stderr) {
