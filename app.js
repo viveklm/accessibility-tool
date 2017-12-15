@@ -32,9 +32,9 @@ app.set('view engine', 'html');
 app.use(bodyParser.json({limit: '100mb'}));
 app.use(bodyParser.urlencoded({limit: '100mb', extended: true}));
 
-/*app.use(session({ resave: true,
-	      saveUninitialized: true,
-	      secret: 'uwotm8' }));*/
+app.use(session({ resave: false,
+	      saveUninitialized: false,
+	      secret: 'uwotm8' }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'src')));
