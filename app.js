@@ -62,6 +62,7 @@ if (fs.existsSync(ssl_path)) {
 }
 
 	app.get('/', function(req, res) {
+		req.session = null;
 		res.render('index.html',{data:''});
 	});
 
