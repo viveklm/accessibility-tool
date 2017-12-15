@@ -45,11 +45,11 @@
 		</div>
 
 		<div>
-			<img src="react.png" height="200px" width="200px" />
+			<img src="react.png" height="200px" width="200px" alt="Free newsletter. Get free recipes, news, and more. Learn more."  />
 		</div>
 
 		<div>
-			<span id="normal" style="color: rgb(136, 132, 119); background-color: rgb(255, 255, 255);">The five boxing wizards jump quickly.</span>
+			<span id="normal" style="color: #f8f5f5; background-color: #FFFFFF">The five boxing wizards jump quickly.</span>
 		</div>
 
 		<div>
@@ -72,9 +72,9 @@
 					<tr>
 						<td>
 						</td>
-						<th scope="col">Name</th>
-						<th scope="col">Phone number</th>
-						<th scope="col">City</th>
+						<th>Name</th>
+						<th>Phone number</th>
+						<th>City</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -99,7 +99,57 @@
 				</tbody>
 			</table>
 		</div>
-
+		<div class="info">Required fields are marked with an asterisk (*)</div>
+		<form>
+			<div class="form_row">
+				<div class="label">
+					<span title="This is a required field">*</span>
+				</div>
+				<div class="input">
+					<input id="name" name="name" type="text" placeholder="E.g. John Smith" required autofocus />
+				</div>
+			</div>
+			<div class="form_row">
+				<div class="label">
+					<label for="email">Email</label>
+					<span title="This is a required field">*</span>
+				</div>
+				<div class="input">
+					<input id="email" name="email" type="email" required />
+				</div>
+			</div>
+			<div class="form_row">
+				<div class="label">
+					<label for="phone">Phone</label>
+				</div>
+				<div class="input">
+					<input id="phone" name="phone" type="tel" />
+				</div>
+			</div>
+			<div class="form_row">
+				<div class="label">
+					<label for="date_of_birth">Date of birth</label>
+				</div>
+				<div class="input">
+					<input id="date_of_birth" name="date_of_birth" type="date" />
+				</div>
+			</div>
+			<div class="form_row">
+				<div class="label">Gender</div>
+				<div class="input_checkbox">
+					<label for="gender_male">
+						<input name="gender" id="gender_male" type="radio" value="Male" checked />Male</label>
+				</div>
+				<div class="input_checkbox">
+					<label for="gender_female">
+						<input name="gender" id="gender_female" type="radio" value="Female" />Female</label>
+				</div>
+			</div>
+			<div class="form_row">
+				<input name="search" value="Search" type="submit" />
+			</div>
+		</form>
+	</div>
 
 
 
