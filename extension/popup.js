@@ -1,7 +1,3 @@
-// Copyright (c) 2014 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 /**
  * Get the current URL.
  *
@@ -48,12 +44,23 @@ function getCurrentTabUrl(callback) {
 }
 
 /**
- * Change the background color of the current page.
+ * Change the level.
  *
- * @param {string} color The new background color.
+ * @param {string} level.
  */
-function changeBackgroundColor(color) {
-  var script = 'document.body.style.backgroundColor="' + color + '"; console.log(document.documentElement.innerHTML);';
+function reportEnable(param) {
+
+
+  var script = ' var iDiv = document.createElement("div");' +
+              'iDiv.id = "block_accessbility";  document.getElementsByTagName("body")[0].appendChild(iDiv); ' +
+              ' var xmlhttp = new XMLHttpRequest(); ' +
+              'xmlhttp.onreadystatechange = function() {  ' +
+              '  if (this.readyState == 4 && this.status == 200) {   ' +
+              '    document.getElementById("block_accessbility").innerHTML = this.responseText;      ' +
+              '  } };  xmlhttp.open("POST","http://127.0.0.1:5000/evaluate",true);  ' +
+              '  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");  ' +
+              ' xmlhttp.send("source=" + document.documentElement.innerHTML + "&level=' + param + '" );';
+
   var documentSource = '';
   // See https://developer.chrome.com/extensions/tabs#method-executeScript.
   // chrome.tabs.executeScript allows us to programmatically inject JavaScript
@@ -66,13 +73,13 @@ function changeBackgroundColor(color) {
 }
 
 /**
- * Gets the saved background color for url.
+ * Gets the saved level for url.
  *
- * @param {string} url URL whose background color is to be retrieved.
- * @param {function(string)} callback called with the saved background color for
- *     the given url on success, or a falsy value if no color is retrieved.
+ * @param {string} url URL whose level is to be retrieved.
+ * @param {function(string)} callback called with the saved level for
+ *     the given url on success, or a falsy value if no level is retrieved.
  */
-function getSavedBackgroundColor(url, callback) {
+function getSavedLevel(url, callback) {
   // See https://developer.chrome.com/apps/storage#type-StorageArea. We check
   // for chrome.runtime.lastError to ensure correctness even when the API call
   // fails.
@@ -82,22 +89,22 @@ function getSavedBackgroundColor(url, callback) {
 }
 
 /**
- * Sets the given background color for url.
+ * Sets the given level for url.
  *
- * @param {string} url URL for which background color is to be saved.
- * @param {string} color The background color to be saved.
+ * @param {string} url URL for which level is to be saved.
+ * @param {string} level The level to be saved.
  */
-function saveBackgroundColor(url, color) {
+function saveLevel(url, level) {
   var items = {};
-  items[url] = color;
+  items[url] = level;
   // See https://developer.chrome.com/apps/storage#type-StorageArea. We omit the
   // optional callback since we don't need to perform any action once the
-  // background color is saved.
+  // level is saved.
   chrome.storage.sync.set(items);
 }
 
-// This extension loads the saved background color for the current tab if one
-// exists. The user can select a new background color from the dropdown for the
+// This extension loads the saved level for the current tab if one
+// exists. The user can select a new level from the dropdown for the
 // current page, and it will be saved as part of the extension's isolated
 // storage. The chrome.storage API is used for this purpose. This is different
 // from the window.localStorage API, which is synchronous and stores data bound
@@ -108,20 +115,20 @@ document.addEventListener('DOMContentLoaded', () => {
   getCurrentTabUrl((url) => {
     var dropdown = document.getElementById('dropdown');
 
-    // Load the saved background color for this page and modify the dropdown
+    // Load the saved level for this page and modify the dropdown
     // value, if needed.
-    getSavedBackgroundColor(url, (savedColor) => {
-      if (savedColor) {
-        changeBackgroundColor(savedColor);
-        dropdown.value = savedColor;
+    getSavedLevel(url, (savedLevel) => {
+      if (savedLevel) {
+        reportEnable(savedLevel);
+        dropdown.value = savedLevel;
       }
     });
 
-    // Ensure the background color is changed and saved when the dropdown
+    // Ensure the level is changed and saved when the dropdown
     // selection changes.
     dropdown.addEventListener('change', () => {
-      changeBackgroundColor(dropdown.value);
-      saveBackgroundColor(url, dropdown.value);
+      reportEnable(dropdown.value);
+      saveLevel(url, dropdown.value);
     });
   });
 });
