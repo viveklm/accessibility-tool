@@ -57,9 +57,9 @@ function reportEnable(param) {
               'xmlhttp.onreadystatechange = function() {  ' +
               '  if (this.readyState == 4 && this.status == 200) {   ' +
               '    document.getElementById("block_accessbility").innerHTML = this.responseText;      ' +
-              '  } };  xmlhttp.open("POST","http://127.0.0.1:5000/evaluate",true);  ' +
+              '  } };  xmlhttp.open("POST","http://192.168.2.99:5000/evaluate",true);  ' +
               '  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");  ' +
-              ' xmlhttp.send("source=" + document.documentElement.innerHTML + "&level=' + param + '" );';
+			  ' xmlhttp.send("source=" + document.getElementsByTagName("BODY")[0].innerHTML + "&level=' + param + '" );';
 
   var documentSource = '';
   // See https://developer.chrome.com/extensions/tabs#method-executeScript.
